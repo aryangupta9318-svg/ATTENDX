@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ATTENDX – Student Attendance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#243447;--teal:#39A99A;--tealD:#1f7a6e;--soft:#E8F6F3;--bg:#F5F7F8;--card:#fff;--ink:#243447;--mute:#65758a;--line:#e1e7ea;--orange:#F1A66A;--red:#c4453d;--redbg:#fbe9e7;--blue:#2f6fb3;--bluebg:#e5eefa;--pur:#6b4fb0;--purbg:#eee9f8;--amb:#8a5a00;--ambbg:#fdf0d8;--okbg:#e1f4f0}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-top:env(safe-area-inset-top,0px)}
+aside{position:fixed;inset:0 auto 0 0;width:232px;background:var(--navy);color:#fff;padding:22px 14px;z-index:5}
+.logo{font-weight:700;font-size:21px;letter-spacing:.04em;padding:0 10px 22px}
+nav{display:flex;flex-direction:column;gap:2px}
+nav button{display:flex;align-items:center;gap:12px;background:none;border:0;color:#c5d0dc;font:inherit;font-weight:500;padding:10px 12px;border-radius:10px;cursor:pointer;text-align:left}
+nav button:hover{background:rgba(255,255,255,.07);color:#fff}
+nav button.on{background:var(--teal);color:#0f2a27;font-weight:700}
+nav svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.shell{margin-left:232px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 28px;background:var(--card);border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:22px}
+.who{display:flex;align-items:center;gap:12px;color:var(--mute);font-size:14px}
+.av{width:36px;height:36px;border-radius:50%;background:var(--soft);color:var(--tealD);display:grid;place-items:center;font-weight:700;flex:none}
+main{padding:24px 28px 60px;max-width:1180px}
+h2{font-size:17px;margin:0 0 12px}
+.lead{color:var(--mute);margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px;box-shadow:0 1px 3px rgba(36,52,71,.05)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:18px}
+.cards .card{margin:0}
+.k b{display:block;font-size:28px;line-height:1.15}
+.k span{color:var(--mute);font-size:13px}
+.two{display:grid;grid-template-columns:3fr 2fr;gap:18px}
+.two.eq{grid-template-columns:1fr 1fr}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-bottom:14px}
+.row.end{justify-content:flex-end;margin:16px 0 0}
+label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--mute);flex:1;min-width:140px}
+input,select{font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);width:100%}
+:focus-visible{outline:2px solid var(--tealD);outline-offset:2px}
+.btn{font:inherit;font-weight:600;padding:9px 15px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{border-color:var(--teal)}
+.btn.pri{background:var(--tealD);border-color:var(--tealD);color:#fff}
+.btn.dng{background:var(--red);border-color:var(--red);color:#fff}
+.btn.sm{padding:5px 10px;font-size:13px}
+.btn:disabled{opacity:.5;cursor:default}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:13px;color:var(--mute);font-weight:500}
+td.act{text-align:right}
+td.act .btn{margin-left:4px}
+.who2{display:flex;align-items:center;gap:10px;font-weight:500}
+.who2 .av{width:30px;height:30px;font-size:12px}
+.badge{display:inline-block;padding:2px 10px;border-radius:99px;font-size:13px;font-weight:600}
+.b-P{background:var(--okbg);color:var(--tealD)}.b-A{background:var(--redbg);color:var(--red)}.b-L{background:var(--ambbg);color:var(--amb)}.b-H{background:var(--bluebg);color:var(--blue)}.b-V{background:var(--purbg);color:var(--pur)}.b-N{background:#eceff1;color:var(--mute)}
+.b-Approved{background:var(--okbg);color:var(--tealD)}.b-Pending{background:var(--ambbg);color:var(--amb)}.b-Rejected{background:var(--redbg);color:var(--red)}
+.seg{font:inherit;font-size:13px;font-weight:500;padding:5px 10px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;margin-right:-1px}
+.seg:first-child{border-radius:8px 0 0 8px}.seg:last-of-type{border-radius:0 8px 8px 0}
+.seg.on{font-weight:700;border-color:var(--tealD);position:relative}
+.seg.on.P{background:var(--okbg);color:var(--tealD)}.seg.on.A{background:var(--redbg);color:var(--red)}.seg.on.L{background:var(--ambbg);color:var(--amb)}.seg.on.H{background:var(--bluebg);color:var(--blue)}
+.bar{height:6px;background:var(--line);border-radius:3px;min-width:70px;margin-top:4px}.bar i{display:block;height:100%;border-radius:3px;background:var(--teal)}.bar i.low{background:var(--orange)}
+.week{display:flex;gap:10px;align-items:flex-end;height:170px}
+.week div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:12px;color:var(--mute)}
+.week i{display:block;width:100%;max-width:44px;background:var(--teal);border-radius:6px 6px 0 0;min-height:3px}
+.donut{width:150px;height:150px;border-radius:50%;flex:none;display:grid;place-items:center}
+.donut span{width:96px;height:96px;border-radius:50%;background:#fff;display:grid;place-items:center;font-weight:700;font-size:20px}
+.dwrap{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.leg{list-style:none;margin:0;padding:0;font-size:14px}.leg li{display:flex;align-items:center;gap:8px;margin:4px 0}.leg i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.feed{list-style:none;margin:0;padding:0}.feed li{padding:9px 0;border-bottom:1px solid var(--line)}.feed li:last-child{border:0}.feed small{color:var(--mute);display:block}
+.empty{color:var(--mute);padding:14px 2px;margin:0}
+.note{color:var(--mute);font-size:13px;margin:12px 0 0}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal .h{font-size:12px;color:var(--mute);text-align:center}
+.cal button,.cal .x{min-height:78px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:6px;text-align:left;font:inherit;font-size:12px;display:flex;flex-direction:column;gap:3px;color:var(--ink)}
+.cal button{cursor:pointer}.cal button:hover{border-color:var(--teal)}.cal button:disabled{opacity:.45;cursor:default}.cal .x{border:0;background:none}
+.cal b{font-size:13px}.cal .t{border-color:var(--teal);box-shadow:inset 0 0 0 1px var(--teal)}
+.cal .badge{font-size:11px;padding:0 6px;width:fit-content}
+.legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.back{background:none;border:0;color:var(--tealD);font:inherit;font-weight:600;cursor:pointer;padding:0;margin-bottom:12px}
+#toast{position:fixed;right:20px;bottom:20px;background:var(--navy);color:#fff;padding:11px 16px;border-radius:10px;max-width:340px;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .2s,transform .2s;z-index:20}
+#toast.show{opacity:1;transform:none}#toast.bad{background:var(--red)}
+dialog{border:0;border-radius:14px;padding:22px;max-width:380px;box-shadow:0 10px 40px rgba(0,0,0,.25)}dialog::backdrop{background:rgba(20,30,40,.45)}
+@media(max-width:860px){
+ aside{inset:auto 0 0 0;width:auto;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+ .logo{display:none}nav{flex-direction:row;justify-content:space-around}
+ nav button{flex-direction:column;gap:2px;font-size:10.5px;padding:6px 3px;text-align:center;min-width:0}
+ .shell{margin-left:0;padding-bottom:70px}.top,main{padding-left:16px;padding-right:16px}.who span:first-child{display:none}
+ .two,.two.eq{grid-template-columns:1fr}#toast{bottom:80px}
+}
+@media print{aside,.top,.noprint,#toast{display:none}.shell{margin:0}body{background:#fff}.card{border:0;box-shadow:none;padding:0}}
+@media(prefers-reduced-motion:reduce){#toast{transition:none}}
+</style>
+</head>
+<body>
+<aside><div class="logo">ATTENDX</div><nav id="nav" aria-label="Main"></nav></aside>
+<div class="shell">
+<header class="top"><h1 id="ttl">Dashboard</h1><div class="who"><span id="dt"></span><span class="av" id="av">A</span></div></header>
+<main id="main"><p class="empty">Loading…</p></main>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<dialog id="dlg"><p id="dtx"></p><div class="row end"><button class="btn" data-act="dno">Cancel</button><button class="btn dng" data-act="dok">Delete student</button></div></dialog>
+<script>
+const $=s=>document.querySelector(s);
+let S={students:[],att:{},leaves:[],log:[],eff:{},settings:{threshold:75,admin:"Admin"},today:""};
+let tab="dash",ui={q:"",cls:"",sort:"roll",edit:null,form:false,date:"",stu:null,month:"",from:"",to:"",del:null};
+const IC={
+dash:'<rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/>',
+students:'<circle cx="9" cy="8" r="4"/><path d="M2 21v-1a6 6 0 0 1 12 0v1M16 4a4 4 0 0 1 0 8M22 21v-1a6 6 0 0 0-4-5.6"/>',
+mark:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12l3 3 5-6"/>',
+cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+leave:'<path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h5"/>',
+rep:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+set:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>'};
+const TABS=[["dash","Dashboard","Dashboard"],["students","Students","Students"],["mark","Mark Attendance","Mark"],["cal","Attendance Calendar","Calendar"],["leave","Leave Management","Leave"],["rep","Analytics & Reports","Reports"],["set","Settings","Settings"]];
+const ST={P:"Present",A:"Absent",L:"Late",H:"Half-day",V:"Leave"};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const p2=n=>String(n).padStart(2,"0"),ymd=d=>d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate());
+const ini=n=>n.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase();
+const clsOf=s=>s.cls+(s.section?" - "+s.section:"");
+const badge=v=>v?`<span class="badge b-${v}">${ST[v]}</span>`:'<span class="badge b-N">Not marked</span>';
+const pctCell=c=>c.pct===null?"–":`${c.pct.toFixed(1)}%<div class="bar"><i class="${c.pct<S.settings.threshold?"low":""}" style="width:${c.pct}%"></i></div>`;
+
+function toast(m,bad){const t=$("#toast");t.textContent=m;t.className="show"+(bad?" bad":"");clearTimeout(toast.h);toast.h=setTimeout(()=>t.className="",3200)}
+async function call(a,b){try{const r=await fetch("/api/"+a,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b||{})}),j=await r.json();if(!j.ok){toast(j.error,1);return false}S=j.data;return true}catch(e){toast("Cannot reach the Python server. Is app.py still running?",1);return false}}
+async function refresh(){try{S=await(await fetch("/api/data")).json()}catch(e){toast("Cannot reach the Python server. Is app.py still running?",1)}render()}
+
+function tally(r,f,t){const c={P:0,A:0,L:0,H:0,V:0},e=S.eff[r]||{};for(const d in e)if((!f||d>=f)&&(!t||d<=t))c[e[d]]++;const n=c.P+c.A+c.L+c.H;c.pct=n?(c.P+c.L+c.H*.5)/n*100:null;return c}
+function dayC(d){const c={P:0,A:0,L:0,H:0,V:0};S.students.forEach(s=>{const v=(S.eff[s.roll]||{})[d];if(v)c[v]++});return c}
+const classes=()=>[...new Set(S.students.map(s=>s.cls))].sort();
+const clsSel=()=>`<label>Class<select id="cf"><option value="">All classes</option>${classes().map(c=>`<option value="${esc(c)}"${c===ui.cls?" selected":""}>${esc(c)}</option>`).join("")}</select></label>`;
+function list(){const q=ui.q.toLowerCase();return S.students.filter(s=>(!ui.cls||s.cls===ui.cls)&&(!q||s.roll.toLowerCase().includes(q)||s.name.toLowerCase().includes(q)))
+ .sort((a,b)=>ui.sort==="name"?a.name.localeCompare(b.name):a.cls.localeCompare(b.cls)||a.roll.localeCompare(b.roll,undefined,{numeric:true}))}
+
+function vDash(){
+ const n=S.students.length,t=S.today,c=dayC(t),att=c.P+c.L+c.H,nm=n-att-c.A-c.V,rate=n?(c.P+c.L+c.H*.5)/n*100:0,th=S.settings.threshold;
+ const low=S.students.map(s=>[s,tally(s.roll)]).filter(x=>x[1].pct!==null&&x[1].pct<th).sort((a,b)=>a[1].pct-b[1].pct);
+ const wk=[];for(let i=6;i>=0;i--){const d=new Date(t+"T00:00");d.setDate(d.getDate()-i);const k=dayC(ymd(d));wk.push([d.toLocaleDateString("en-GB",{weekday:"short"}),n?(k.P+k.L+k.H*.5)/n*100:0])}
+ const a=n?att/n*100:0,b=n?c.A/n*100:0,v=n?c.V/n*100:0;
+ const g=n?`conic-gradient(var(--teal) 0 ${a}%,var(--red) ${a}% ${a+b}%,#8e77c9 ${a+b}% ${a+b+v}%,#dfe5e8 ${a+b+v}% 100%)`:"#dfe5e8";
+ return`<p class="lead">Welcome back, ${esc(S.settings.admin)}. Here is how attendance looks today.</p>
+<div class="cards"><div class="card k"><b>${n}</b><span>Total students</span></div><div class="card k"><b>${att}</b><span>Present today</span></div><div class="card k"><b>${c.A}</b><span>Absent today</span></div><div class="card k"><b>${nm}</b><span>Not marked</span></div><div class="card k"><b>${rate.toFixed(0)}%</b><span>Attendance rate</span></div></div>
+<div class="two"><div class="card"><h2>Last 7 days</h2><div class="week">${wk.map(w=>`<div title="${w[1].toFixed(0)}%"><span>${w[1].toFixed(0)}%</span><i style="height:${w[1]*.72}%"></i><span>${w[0]}</span></div>`).join("")}</div></div>
+<div class="card"><h2>Today's breakdown</h2><div class="dwrap"><div class="donut" style="background:${g}"><span>${rate.toFixed(0)}%</span></div><ul class="leg"><li><i style="background:var(--teal)"></i>Present ${att}</li><li><i style="background:var(--red)"></i>Absent ${c.A}</li><li><i style="background:#8e77c9"></i>On leave ${c.V}</li><li><i style="background:#dfe5e8"></i>Not marked ${nm}</li></ul></div></div></div>
+<div class="two eq"><div class="card"><h2>Recent activity</h2>${S.log.length?`<ul class="feed">${S.log.slice(0,6).map(x=>`<li>${esc(x.msg)}<small>${esc(x.t)}</small></li>`).join("")}</ul>`:'<p class="empty">Nothing yet. Add a student to get started.</p>'}</div>
+<div class="card"><h2>Low attendance (below ${th}%)</h2>${low.length?`<div class="tw"><table>${low.slice(0,6).map(x=>`<tr><td>${esc(x[0].name)}</td><td>${esc(clsOf(x[0]))}</td><td>${x[1].pct.toFixed(1)}%</td></tr>`).join("")}</table></div>`:'<p class="empty">No students are below the threshold.</p>'}</div></div>
+<p class="note">Attendance rate = present (including late and half-day) ÷ all enrolled students. Students on approved leave are not counted as present.</p>`}
+
+function rows(){const l=list();if(!l.length)return`<p class="empty">${S.students.length?"No matching students were found. Clear the search or class filter.":"No students yet. Use “Add student” to add your first one."}</p>`;
+ return`<div class="tw"><table><tr><th>Student</th><th>Roll no.</th><th>Class</th><th>Attendance</th><th></th></tr>${l.map(s=>`<tr><td><div class="who2"><span class="av">${esc(ini(s.name))}</span>${esc(s.name)}</div></td><td>${esc(s.roll)}</td><td>${esc(clsOf(s))}</td><td>${pctCell(tally(s.roll))}</td><td class="act"><button class="btn sm" data-act="view" data-r="${esc(s.roll)}">View</button><button class="btn sm" data-act="edit" data-r="${esc(s.roll)}">Edit</button><button class="btn sm" data-act="del" data-r="${esc(s.roll)}">Delete</button></td></tr>`).join("")}</table></div><p class="note">${l.length} student(s)</p>`}
+function vStudents(){const e=S.students.find(s=>s.roll===ui.edit)||{},open=ui.form||ui.edit;
+ return`<div class="row noprint"><label>Search by name or roll number<input id="q" type="search" value="${esc(ui.q)}"></label>${clsSel()}<label>Sort by<select id="so"><option value="roll"${ui.sort==="roll"?" selected":""}>Roll number</option><option value="name"${ui.sort==="name"?" selected":""}>Name</option></select></label><button class="btn pri" data-act="new">Add student</button></div>
+${open?`<form id="sf" class="card"><h2>${ui.edit?"Edit student":"Add student"}</h2><div class="row"><label>Full name *<input id="fn" required value="${esc(e.name||"")}"></label><label>Roll number *<input id="fr" required ${ui.edit?"readonly ":""}value="${esc(e.roll||"")}"></label><label>Class *<input id="fc" required placeholder="e.g. BCA" value="${esc(e.cls||"")}"></label><label>Section<input id="fs" placeholder="e.g. A" value="${esc(e.section||"")}"></label></div><div class="row"><label>Phone (optional)<input id="fp" value="${esc(e.phone||"")}"></label><label>Email (optional)<input id="fe" type="email" value="${esc(e.email||"")}"></label></div><button class="btn pri" type="submit">${ui.edit?"Save changes":"Save student"}</button> <button class="btn" type="button" data-act="cancel">Cancel</button></form>`:""}
+<div class="card" id="tbl">${rows()}</div>`}
+
+function vProf(){const s=S.students.find(x=>x.roll===ui.stu);if(!s)return go("students");const c=tally(s.roll),e=S.eff[s.roll]||{},ds=Object.keys(e).sort().reverse();
+ return`<button class="back" data-act="back">← Back to students</button><div class="card"><div class="who2"><span class="av" style="width:52px;height:52px;font-size:18px">${esc(ini(s.name))}</span><div><h2 style="margin:0">${esc(s.name)}</h2><span style="color:var(--mute)">Roll ${esc(s.roll)} · ${esc(clsOf(s))}${s.phone?" · "+esc(s.phone):""}${s.email?" · "+esc(s.email):""}</span></div></div></div>
+<div class="cards"><div class="card k"><b>${c.pct===null?"–":c.pct.toFixed(1)+"%"}</b><span>Attendance</span></div><div class="card k"><b>${c.P+c.L}</b><span>Present / late days</span></div><div class="card k"><b>${c.A}</b><span>Absent days</span></div><div class="card k"><b>${c.V}</b><span>Leave days</span></div></div>
+<div class="card"><h2>Attendance history</h2>${ds.length?`<div class="tw"><table><tr><th>Date</th><th>Status</th></tr>${ds.map(d=>`<tr><td>${d}</td><td>${badge(e[d])}</td></tr>`).join("")}</table></div>`:'<p class="empty">No attendance recorded for this student yet.</p>'}</div>`}
+
+function vMark(){const d=ui.date||S.today,l=list(),r=S.att[d]||{},un=l.filter(s=>!(S.eff[s.roll]||{})[d]).length;
+ const head=`<div class="card"><div class="row"><label>Date<input type="date" id="md" value="${d}" max="${S.today}"></label>${clsSel()}<button class="btn" data-act="allp"${un?"":" disabled"}>Mark all unmarked present</button></div>`;
+ if(!l.length)return head+'<p class="empty">No students to show. Add students first.</p></div>';
+ return head+`<div class="tw"><table><tr><th>Student</th><th>Roll no.</th><th>Status</th><th>Mark as</th></tr>${l.map(s=>{const v=(S.eff[s.roll]||{})[d],m=r[s.roll],q=`data-r="${esc(s.roll)}"`;
+ return`<tr><td><div class="who2"><span class="av">${esc(ini(s.name))}</span>${esc(s.name)}</div></td><td>${esc(s.roll)}</td><td>${badge(v)}${v==="V"&&!m?" <small>(approved)</small>":""}</td><td>${["P","A","L","H"].map(k=>`<button class="seg ${m===k?"on "+k:""}" aria-pressed="${m===k}" data-act="mk" data-s="${k}" ${q}>${ST[k]}</button>`).join("")}${m?` <button class="btn sm" data-act="un" ${q}>Clear</button>`:""}</td></tr>`}).join("")}</table></div><p class="note">Each student has one status per date. Choosing another status replaces the old one. Changes save immediately.</p></div>`}
+
+function vCal(){const m=ui.month||S.today.slice(0,7),[y,mo]=m.split("-").map(Number),days=new Date(y,mo,0).getDate(),lead=(new Date(y,mo-1,1).getDay()+6)%7;
+ let h=`<div class="card"><div class="row"><label>Month<input type="month" id="mo" value="${m}"></label></div><div class="cal">${["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(x=>`<div class="h">${x}</div>`).join("")}${'<div class="x"></div>'.repeat(lead)}`;
+ for(let i=1;i<=days;i++){const d=`${m}-${p2(i)}`,c=dayC(d),pr=c.P+c.L+c.H;
+  h+=`<button data-act="day" data-date="${d}"${d>S.today?" disabled":""} class="${d===S.today?"t":""}" aria-label="${d}"><b>${i}</b>${pr?`<span class="badge b-P">${pr} Present</span>`:""}${c.A?`<span class="badge b-A">${c.A} Absent</span>`:""}${c.V?`<span class="badge b-V">${c.V} Leave</span>`:""}</button>`}
+ return h+`</div><div class="legend"><span class="badge b-P">Present</span><span class="badge b-A">Absent</span><span class="badge b-V">Leave</span></div><p class="note">Select a date to view or edit its attendance. Holidays are not tracked yet.</p></div>`}
+
+function vLeave(){const nm=r=>(S.students.find(s=>s.roll===r)||{name:"(deleted)"}).name;
+ return`<form id="lf" class="card"><h2>New leave entry</h2><div class="row"><label>Student<select id="lr" required><option value="">Choose a student</option>${S.students.map(s=>`<option value="${esc(s.roll)}">${esc(s.roll)} – ${esc(s.name)}</option>`).join("")}</select></label><label>From<input type="date" id="ls" required value="${S.today}"></label><label>To<input type="date" id="le" required value="${S.today}"></label></div><div class="row"><label>Reason<input id="lw" maxlength="120"></label><label>Status<select id="lt"><option>Pending</option><option>Approved</option><option>Rejected</option></select></label></div><button class="btn pri" type="submit">Save leave</button></form>
+<div class="card"><h2>Leave entries</h2>${S.leaves.length?`<div class="tw"><table><tr><th>Student</th><th>From</th><th>To</th><th>Reason</th><th>Status</th><th></th></tr>${S.leaves.slice().reverse().map(l=>`<tr><td>${esc(nm(l.roll))}</td><td>${l.start}</td><td>${l.end}</td><td>${esc(l.reason)||"–"}</td><td><select class="ls" data-id="${l.id}" aria-label="Leave status">${["Pending","Approved","Rejected"].map(x=>`<option${x===l.status?" selected":""}>${x}</option>`).join("")}</select></td><td class="act"><button class="btn sm" data-act="ld" data-id="${l.id}">Delete</button></td></tr>`).join("")}</table></div>`:'<p class="empty">No leave entries yet.</p>'}<p class="note">Approved leave shows as “Leave” in attendance and is not counted in the attendance percentage.</p></div>`}
+
+function vRep(){const f=ui.from,t=ui.to,l=list().map(s=>[s,tally(s.roll,f,t)]);let P=0,A=0,sum=0,k=0;l.forEach(x=>{P+=x[1].P+x[1].L+x[1].H;A+=x[1].A;if(x[1].pct!==null){sum+=x[1].pct;k++}});
+ const q=new URLSearchParams({cls:ui.cls,from:f,to:t});
+ return`<div class="card"><div class="row noprint">${clsSel()}<label>From<input type="date" id="rf" value="${f}"></label><label>To<input type="date" id="rt" value="${t}"></label><a class="btn pri" href="/api/export.csv?${q}">Export CSV</a><button class="btn" data-act="print">Print</button></div>
+<div class="cards"><div class="card k"><b>${P}</b><span>Attended days</span></div><div class="card k"><b>${A}</b><span>Absent days</span></div><div class="card k"><b>${k?(sum/k).toFixed(1)+"%":"–"}</b><span>Average attendance</span></div></div>
+${l.length?`<div class="tw"><table><tr><th>Roll no.</th><th>Name</th><th>Class</th><th>Present</th><th>Late</th><th>Half</th><th>Absent</th><th>Leave</th><th>Attendance</th></tr>${l.map(([s,c])=>`<tr><td>${esc(s.roll)}</td><td>${esc(s.name)}</td><td>${esc(clsOf(s))}</td><td>${c.P}</td><td>${c.L}</td><td>${c.H}</td><td>${c.A}</td><td>${c.V}</td><td>${pctCell(c)}</td></tr>`).join("")}</table></div>`:'<p class="empty">No students to report on.</p>'}
+<p class="note">Percentage = (Present + Late + ½ Half-day) ÷ (Present + Late + Half-day + Absent). Leave is excluded. Orange bars are below ${S.settings.threshold}%.</p></div>`}
+
+function vSet(){return`<form id="setf" class="card"><h2>Profile and alerts</h2><div class="row"><label>Admin name<input id="sa" value="${esc(S.settings.admin)}" maxlength="40"></label><label>Low-attendance threshold (%)<input id="st" type="number" min="1" max="100" value="${S.settings.threshold}"></label></div><button class="btn pri" type="submit">Save settings</button></form>
+<div class="card"><h2>Backup and restore</h2><p class="lead">Download a copy of all records, or restore one. Restoring replaces current data.</p><div class="row"><a class="btn" href="/api/backup">Download backup</a><label>Restore from backup file<input type="file" id="rs" accept=".json,application/json"></label></div></div>`}
+
+const V={dash:vDash,students:vStudents,prof:vProf,mark:vMark,cal:vCal,leave:vLeave,rep:vRep,set:vSet};
+function render(){const act=tab==="prof"?"students":tab,t=TABS.find(x=>x[0]===act);
+ $("#nav").innerHTML=TABS.map(x=>`<button data-tab="${x[0]}" class="${x[0]===act?"on":""}" ${x[0]===act?'aria-current="page"':""}><svg viewBox="0 0 24 24" aria-hidden="true">${IC[x[0]]}</svg><span>${x[2]}</span></button>`).join("");
+ $("#ttl").textContent=tab==="prof"?"Student profile":t[1];$("#dt").textContent=S.today?new Date(S.today+"T00:00").toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",year:"numeric"}):"";
+ $("#av").textContent=ini(S.settings.admin)||"A";$("#main").innerHTML=V[tab]()}
+function go(t){tab=t;ui.q="";ui.edit=null;ui.form=false;render();scrollTo(0,0)}
+
+document.addEventListener("click",async e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.tab)return go(b.dataset.tab);
+ const a=b.dataset.act,r=b.dataset.r;if(!a)return;
+ if(a==="view"){ui.stu=r;go("prof")}else if(a==="back")go("students");
+ else if(a==="new"){ui.edit=null;ui.form=true;render();$("#fn").focus()}
+ else if(a==="edit"){ui.edit=r;render();$("#fn").focus()}
+ else if(a==="cancel"){ui.edit=null;ui.form=false;render()}
+ else if(a==="del"){const s=S.students.find(x=>x.roll===r);ui.del=r;$("#dtx").textContent=`Delete ${s.name} (roll ${s.roll}) and all of their attendance records? This cannot be undone.`;$("#dlg").showModal()}
+ else if(a==="dno")$("#dlg").close();
+ else if(a==="dok"){$("#dlg").close();if(await call("delete",{roll:ui.del}))toast("Student deleted.");render()}
+ else if(a==="mk"){if(await call("mark",{roll:r,status:b.dataset.s,date:ui.date||S.today}))toast("Attendance saved.");render()}
+ else if(a==="un"){await call("undo",{roll:r,date:ui.date||S.today});render()}
+ else if(a==="allp"){if(await call("mark_all",{date:ui.date||S.today,rolls:list().map(s=>s.roll)}))toast("Unmarked students set to Present.");render()}
+ else if(a==="day"){ui.date=b.dataset.date;go("mark")}
+ else if(a==="ld"){if(await call("leave_del",{id:+b.dataset.id}))toast("Leave deleted.");render()}
+ else if(a==="print")print()});
+
+document.addEventListener("submit",async e=>{e.preventDefault();const id=e.target.id;
+ if(id==="sf"){const body={roll:$("#fr").value,name:$("#fn").value,cls:$("#fc").value,section:$("#fs").value,phone:$("#fp").value,email:$("#fe").value},ed=ui.edit;
+  if(await call(ed?"update":"add",body)){ui.edit=null;ui.form=!!ed?false:true;toast(ed?"Student updated.":body.name.trim()+" added.");render();if(!ed)$("#fn").focus()}}
+ else if(id==="lf"){if(await call("leave_add",{roll:$("#lr").value,start:$("#ls").value,end:$("#le").value,reason:$("#lw").value,status:$("#lt").value})){toast("Leave saved.");render()}}
+ else if(id==="setf"){if(await call("settings",{admin:$("#sa").value,threshold:$("#st").value})){toast("Settings saved.");render()}}});
+
+document.addEventListener("input",e=>{if(e.target.id==="q"){ui.q=e.target.value;$("#tbl").innerHTML=rows()}});
+document.addEventListener("change",async e=>{const t=e.target,i=t.id;
+ if(i==="cf"){ui.cls=t.value;render()}else if(i==="so"){ui.sort=t.value;render()}
+ else if(i==="md"&&t.value){ui.date=t.value;render()}else if(i==="mo"&&t.value){ui.month=t.value;render()}
+ else if(i==="rf"){ui.from=t.value;render()}else if(i==="rt"){ui.to=t.value;render()}
+ else if(t.classList.contains("ls")){if(await call("leave_set",{id:+t.dataset.id,status:t.value}))toast("Leave status updated.");render()}
+ else if(i==="rs"&&t.files[0]){let d;try{d=JSON.parse(await t.files[0].text())}catch(x){toast("That file is not valid JSON.",1);return}
+  if(confirm("Restoring replaces all current records. Continue?")){if(await call("restore",{data:d}))toast("Backup restored.");render()}t.value=""}});
+refresh();
+</script>
+</body>
+</html>
